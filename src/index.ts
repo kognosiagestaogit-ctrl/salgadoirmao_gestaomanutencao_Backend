@@ -9,6 +9,9 @@ import manutencoesRouter from "./routes/manutencoes.routes";
 import dashboardRouter from "./routes/dashboard.routes";
 import usuariosRouter from "./routes/usuarios.routes";
 import configRouter from "./routes/config.routes";
+import authRouter from "./routes/auth.routes";
+import { authMiddleware } from "./middlewares/auth.middleware";
+import swaggerRouter from "./swagger";
 
 const app = new Hono();
 
@@ -26,6 +29,9 @@ app.use(
   })
 );
 
+// Aplicar middleware de autenticação nas rotas protegidas da API
+app.use("/api/*", authMiddleware);
+
 // Rota de Health Check
 app.get("/health", (c) => {
   return c.json({
@@ -36,12 +42,16 @@ app.get("/health", (c) => {
 });
 
 // Montagem das rotas da API REST
+app.route("/api/auth", authRouter);
 app.route("/api/maquinas", maquinasRouter);
 app.route("/api/categorias", categoriasRouter);
 app.route("/api/manutencoes", manutencoesRouter);
 app.route("/api/dashboard", dashboardRouter);
 app.route("/api/usuarios", usuariosRouter);
 app.route("/api/configuracoes", configRouter);
+
+// Documentação (Swagger UI)
+app.route("/", swaggerRouter);
 
 // Tratamento global de rotas 404
 app.notFound((c) => {

@@ -32,12 +32,14 @@ async function seed() {
     await db.insert(categoriasMaquinaTable).values(categorias);
 
     // 3. Inserir Usuários
-    console.log("👥 Inserindo Usuários da Equipe...");
+    console.log("👥 Inserindo Usuários da Equipe com Senha Criptografada...");
+    const defaultPasswordHash = await Bun.password.hash("123456");
     const usuarios = [
       {
         id: "usr-admin",
         email: "carlos.salgado@salgadocare.com.br",
         nome: "Carlos Salgado (Admin)",
+        password_hash: defaultPasswordHash,
         role: "admin",
         ativo: true,
         created_at: "2025-01-01T08:00:00Z",
@@ -46,6 +48,7 @@ async function seed() {
         id: "usr-tec-1",
         email: "marcos.tecnico@salgadocare.com.br",
         nome: "Marcos Silva - Técnico Eletromecânico",
+        password_hash: defaultPasswordHash,
         role: "tecnico",
         ativo: true,
         created_at: "2025-01-15T09:00:00Z",
@@ -54,6 +57,7 @@ async function seed() {
         id: "usr-tec-2",
         email: "rodrigo.tecnico@salgadocare.com.br",
         nome: "Rodrigo Almeida - Técnico de Refrigeração",
+        password_hash: defaultPasswordHash,
         role: "tecnico",
         ativo: true,
         created_at: "2025-02-01T10:30:00Z",
@@ -62,6 +66,7 @@ async function seed() {
         id: "usr-op-1",
         email: "ana.operadora@salgadocare.com.br",
         nome: "Ana Beatriz - Supervisora de Linha",
+        password_hash: defaultPasswordHash,
         role: "operador",
         ativo: true,
         created_at: "2025-02-15T08:00:00Z",
