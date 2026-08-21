@@ -6,6 +6,6 @@ export default defineConfig({
   out: "./drizzle",
   dialect: "postgresql",
   dbCredentials: {
-    url: process.env.DATABASE_URL || "postgres://postgres:postgrespassword@localhost:5432/salgado_care",
+    url: process.env.DATABASE_URL || "postgres://postgres:postgrespassword@localhost:7003/salgado_care",
   },
 });
